@@ -15,15 +15,39 @@
         console.error(error);
     }
     });
+
+    const sendMessage = async () => {
+    try {
+      const response = await fetch("https://lab5-p379.onrender.com/api/v1/messages/", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: message.value }),
+      });
+
+      if (response.ok) {
+        // update message als het succesvol verzonden is
+        const data = await response.json();
+        const newMessage = { id: data.id, text: message.value };
+        allMessages.data.push(newMessage);
+        message.value = ''; // leeg input veld na send
+      } else {
+        console.error('Failed to send message');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 </script>
 
 <template>
   <!--Chat.vue-->
   <div>
     <ul>
-        <li v-for="m in allMessages.data">
-            {{m.text}}
-        </li>
+        <li v-for="m in allMessages.data" :key="m.id">
+        {{ m.text }}
+      </li>
     </ul>
     <div>
         <input v-model="message" type="text" placeholder=""> <!--zodat waarden van input en message gelijk zijn-->
