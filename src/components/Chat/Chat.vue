@@ -45,7 +45,7 @@
   <!--Chat.vue-->
   <div>
     <ul>
-        <li v-for="m in allMessages.data.slice(-20)" :key="m.id">
+        <li v-for="m in allMessages.data.slice(-20).reverse()" :key="m.id">
         {{ m.text }}
       </li>
     </ul>
