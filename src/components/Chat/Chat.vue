@@ -3,14 +3,18 @@
     import { ref, reactive, onMounted } from 'vue'; //enkel importeren wat je nodig hebt, houdt de opslag klein
     let message = ref(''); //ref is een reactieve variabele, voor simpele variabelen als int - string - boolean, reflection = iets in het oog houden
     let allMessages = reactive({
-        data: ["jo", "jow", "jowkes"],
+        data: [],
     }); //reactive is voor complexe variabelen als arrays en objecten
 
-    //function sendMessage
-    const sendMessage = () => {
-        allMessages.data.push(message.value);
-        message.value = ''; //message is een ref en ref heeft altijd een value nodig. dit is de value van de reflective variabele
+    onMounted(async () => {
+    try {
+        const response = await fetch("https://lab5-p379.onrender.com/api/v1/messages/");
+        const data = await response.json();
+        allMessages.data = data;
+    } catch (error) {
+        console.error(error);
     }
+    });
 </script>
 
 <template>
@@ -18,7 +22,7 @@
   <div>
     <ul>
         <li v-for="m in allMessages.data">
-            {{m}}
+            {{m.text}}
         </li>
     </ul>
     <div>
