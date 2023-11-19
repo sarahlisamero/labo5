@@ -23,13 +23,13 @@
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: message.value }),
+        body: JSON.stringify({ text: message.value, user: 'Sarah-Lisa'}),
       });
 
       if (response.ok) {
         // update message als het succesvol verzonden is
         const data = await response.json();
-        const newMessage = { id: data.id, text: message.value };
+        const newMessage = { id: data.id, text: message.value, user: 'Sarah-Lisa'};
         allMessages.data.push(newMessage);
         message.value = ''; // leeg input veld na send
       } else {
@@ -46,7 +46,7 @@
   <div>
     <ul>
         <li v-for="m in allMessages.data.slice(-20).reverse()" :key="m.id">
-        {{ m.text }}
+          {{ m.user }}: {{ m.text }}
       </li>
     </ul>
     <div>
