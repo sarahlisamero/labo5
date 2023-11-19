@@ -45,11 +45,12 @@
   <!--Chat.vue-->
   <div>
     <ul>
-        <li v-for="m in allMessages.data.slice(-20).reverse()" :key="m.id">
-          {{ m.user }}: {{ m.text }}
+        <li v-for="m in allMessages.data.slice(-15).reverse()" :key="m.id">
+          <div class="user">{{ m.user }}:</div> 
+          <div class="message">{{ m.text }}</div>
       </li>
     </ul>
-    <div>
+    <div class="textbox">
         <input v-model="message" type="text" placeholder=""> <!--zodat waarden van input en message gelijk zijn-->
         <button @click="sendMessage">Send</button> <!--@click is een eventlistener-->
     </div>
@@ -58,4 +59,30 @@
 
 <style scoped>
  /*scoped wil zeggen specifiek voor component*/
+  ul{
+      list-style-type: none;
+      padding: 0;
+  }
+  li{
+      margin-bottom: 10px;
+  }
+  .user{
+      font-weight: bold;
+      font-size: 20px;
+      font-family: sans-serif;
+  }
+  .message{
+      font-size: 18px;
+      font-family: sans-serif;
+  }
+  .textbox input, .textbox button{
+      padding: 10px;
+  }
+  .textbox button{
+      background-color: palevioletred;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+  }
 </style>
